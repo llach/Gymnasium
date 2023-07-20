@@ -280,6 +280,18 @@ class Wrapper(
         elif name.startswith("_"):
             raise AttributeError(f"accessing private attribute '{name}' is prohibited")
         return getattr(self.env, name)
+    
+    def set_attr(self, name, value):
+        """ allows setting a wrapper's or the env's attribute without explicitly unwrapping them
+        """
+        # update own, public attribute
+        if name in self.__dict__: return setattr(self, name, value) 
+
+        # self.env is yet another wrapper
+        if isinstance(self.env, Wrapper): return self.env.set_attr(name, value)
+
+        # actual environment → set attribute
+        return setattr(self.env, name, value)
 
     @property
     def spec(self) -> EnvSpec | None:
