@@ -282,7 +282,7 @@ class MuJocoPyEnv(BaseMujocoEnv):
         self.viewer = self._viewers.get(mode)
         if self.viewer is None:
             if mode == "human":
-                self.viewer = mujoco_py.MjViewer(self.sim)
+                self.viewer = mujoco_py.MjViewer(self.sim, width=960, height=720)
 
             elif mode in {"rgb_array", "depth_array"}:
                 self.viewer = mujoco_py.MjRenderContextOffscreen(self.sim, -1)

@@ -298,11 +298,11 @@ class WindowViewer(BaseRender):
         self._run_speed = 1.0
         self._loop_count = 0
         self._advance_by_one_step = False
-        self._hide_menu = False
+        self._hide_menu = True
 
         width, height = glfw.get_video_mode(glfw.get_primary_monitor()).size
         glfw.window_hint(glfw.VISIBLE, 1)
-        self.window = glfw.create_window(width // 2, height // 2, "mujoco", None, None)
+        self.window = glfw.create_window(960, 720, "mujoco", None, None)
 
         self.width, self.height = glfw.get_framebuffer_size(self.window)
         window_width, _ = glfw.get_window_size(self.window)
@@ -590,7 +590,7 @@ class WindowViewer(BaseRender):
 
         self.add_overlay(bottomleft, "FPS", "%d%s" % (1 / self._time_per_render, ""))
         self.add_overlay(
-            bottomleft, "Solver iterations", str(self.data.solver_iter + 1)
+            bottomleft, "Solver iterations", str(self.data.solver_niter + 1)
         )
         self.add_overlay(
             bottomleft, "Step", str(round(self.data.time / self.model.opt.timestep))
